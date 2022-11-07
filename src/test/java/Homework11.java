@@ -3,71 +3,17 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+public class Homework11 {
 
-public class ViktoriyaEDTest {
-
-    //    TC_1_1  - Тест кейс:
-    //    1. Открыть страницу https://openweathermap.org/
-    //    2. Набрать в строке поиска город Paris
-    //    3. Нажать пункт меню Search
-    //    4. Из выпадающего списка выбрать Paris, FR
-    //    5. Подтвердить, что заголовок изменился на "Paris, FR"
-
-    @Test
-    public void testH2TagText_WhenSearchingCityCountry() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-
-        String url = "https://openweathermap.org/";
-        String cityName = "Paris";
-        String expectedResult = "Paris, FR";
-
-        driver.get(url);
-        Thread.sleep(5000);
-
-        WebElement searchCityField = driver.findElement(
-                By.xpath("//div[@id = 'weather-widget']//input[@placeholder = 'Search city']")
-        );
-        searchCityField.click();
-        searchCityField.sendKeys(cityName);
-
-        WebElement searchButton = driver.findElement(
-                By.xpath("//div[@id='weather-widget']//button[@type='submit']\n")
-        );
-        searchButton.click();
-
-        Thread.sleep(2000);
-
-        WebElement parisFrChoiceInDropDownMenu = driver.findElement(
-                By.xpath("//ul[@class=\"search-dropdown-menu\"]//li//span[text() = 'Paris, FR ']")
-        );
-        parisFrChoiceInDropDownMenu.click();
-
-        WebElement h2CityNameHeader = driver.findElement(By.xpath("//div[@id = 'weather-widget']//h2"));
-
-        Thread.sleep(1000);
-
-        String actualResult = h2CityNameHeader.getText();
-
-        Assert.assertEquals(actualResult, expectedResult);
-
-        driver.quit();
-    }
-
-//    @Test
+ //    @Test
 //    public void test_name() {
 //        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
-//        WebDriver driver = new ChromeDriver();
-//
+//        WebDriver driver = new ChromeDriver();//
 //
 //        driver.quit();
 //    }
@@ -80,16 +26,14 @@ public class ViktoriyaEDTest {
 // что title этой страницы OpenWeatherMap API guide - OpenWeatherMap
 
     @Test
-    public void testTitleText_WhenChooseMenuGuide() throws InterruptedException {
+    public void test_TitleText_WhenChooseMenuGuide() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         String url = "https://openweathermap.org/";
-
         String expectedResult = "OpenWeatherMap API guide - OpenWeatherMap";
 
         driver.get(url);
-
         Thread.sleep(5000);
 
         WebElement clickMenuButton = driver.findElement(By.xpath("//li[@id = 'hamburger']"));
@@ -99,10 +43,6 @@ public class ViktoriyaEDTest {
         WebElement pickGuideMenu = driver.findElement(By.xpath("//ul[@id='mobile-menu']//a[@href = '/guide']"));
 
         pickGuideMenu.click();
-
-//        WebElement titleMenuGuide = driver.findElement(By.xpath("//title"));
-
-//        String actualResult = titleMenuGuide.getText();
 
         String actualResult = driver.getTitle();
 
@@ -118,7 +58,7 @@ public class ViktoriyaEDTest {
 // что title этой страницы OpenWeatherMap API guide - OpenWeatherMap
 
     @Test
-    public void testTitleText_WhenChooseMenuGuideMazimize() throws InterruptedException {
+    public void test_TitleText_WhenChooseMenuGuideMazimize() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
@@ -136,7 +76,6 @@ public class ViktoriyaEDTest {
         WebElement GuideMenu = driver.findElement(By.xpath("//a[@href = '/guide']"));
 
         GuideMenu.click();
-//        Assert.assertEquals(GuideMenu, "Guide");
 
         String actualResult = driver.getCurrentUrl();
         String actualResult1 = driver.getTitle();
@@ -154,20 +93,19 @@ public class ViktoriyaEDTest {
     //3.  Подтвердить, что температура для города показана в Фарингейтах
 
     @Test
-    public void testCheckWeather_WhenChooseFaringate() throws InterruptedException {
+    public void test_CheckWeather_WhenChooseFaringate() throws InterruptedException {
 
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         String url = "https://openweathermap.org/";
-        Boolean expectedResult = true;
+        String expectedResult = "°F";
 
         driver.get(url);
 
         Thread.sleep(5000);
 
-
-        WebElement clickWeatherF = driver.findElement(By.xpath("//div[@class='switch-container']/div[3]"));       // correct xPath
+        WebElement clickWeatherF = driver.findElement(By.xpath("//div[@class='switch-container']/div[3]"));
 
         clickWeatherF.click();
 
@@ -175,13 +113,9 @@ public class ViktoriyaEDTest {
 
         Thread.sleep(2000);
 
-        Boolean actualResult = weatherInF.getText().contains("F");
-
-        Assert.assertEquals(actualResult, expectedResult);
+        Assert.assertTrue(weatherInF.getText().contains(expectedResult));
 
         driver.quit();
-
-
     }
 
 
@@ -193,7 +127,7 @@ public class ViktoriyaEDTest {
     //   3. Подтвердить, что на панели внизу страницы есть 2 кнопки “Allow all” и “Manage cookies”
 
     @Test
-    public void testCheckCookiesText() throws InterruptedException {
+    public void test_CheckCookiesText() throws InterruptedException {
 
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Viktoriya\\Desktop\\JAVA\\chromedriver_win32\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -208,8 +142,8 @@ public class ViktoriyaEDTest {
 
         driver.get(url);
         Thread.sleep(5000);
-//        Assert.assertEquals(driver.findElement(By.className("stick-footer-panel__container")).isDisplayed());
 
+        Assert.assertTrue(driver.findElement(By.className("stick-footer-panel__container")).isDisplayed());
 
         WebElement cookiesText = driver.findElement(By.xpath("//div[@id='stick-footer-panel']//p"));
 
@@ -218,7 +152,8 @@ public class ViktoriyaEDTest {
         WebElement manageCookiesButton = driver.findElement(
                 By.xpath("//div[@id='stick-footer-panel']//a[@href='/cookies-settings']")
         );
-// проверить наличие 2х кнопок
+
+        Assert.assertEquals(driver.findElement(By.xpath("//div[class='stick-footer-panel__btn-container']/*")), 2);
 
         String actualResult = cookiesText.getText();
         String actualResult1 = allowAllButton.getText();
@@ -257,6 +192,8 @@ public class ViktoriyaEDTest {
         WebElement menuSupportDropDownMenu = driver.findElement(By.xpath("//div[@id='support-dropdown']"));
 
         menuSupportDropDownMenu.click();
+
+//        Assert.assertEquals(menuSupportDropDownMenu.getSize(), 3);
 
         WebElement dropDownMenuFAQ = driver.findElement(By.xpath("//ul[@id='support-dropdown-menu']//a[@href='/faq']"));
         WebElement dropDownMenuHowToStart = driver.findElement(By.xpath("//ul[@id='support-dropdown-menu']//a[@href='/appid']"));
@@ -308,8 +245,6 @@ public class ViktoriyaEDTest {
         askAQuestionMenu.click();
 
         Thread.sleep(2000);
-
-//        driver.get("https://home.openweathermap.org/questions");
 
         // Store the current window handle
         String winHandleBefore = driver.getWindowHandle();
@@ -572,7 +507,6 @@ public class ViktoriyaEDTest {
     // TC_11_09
     //1.  Открыть базовую ссылку
     //2.  В строке поиска в навигационной панели набрать “Rome”
-    //
     //3.  Нажать клавишу Enter
     //4.  Подтвердить, что вы перешли на страницу в ссылке которой содержатся слова “find” и “Rome”
     //5. Подтвердить, что в строке поиска на новой странице вписано слово “Rome”
@@ -641,15 +575,3 @@ public class ViktoriyaEDTest {
         driver.quit();
     }
 }
-
-
-//        driver.findElement(By.xpath("//div[@id='support-dropdown']")).click();
-//        driver.findElement(By.xpath("//ul[@class='dropdown-menu dropdown-visible']")).isDisplayed();
-//        driver.findElement(By.xpath("//div//ul[@id='support-dropdown-menu']//li//a[contains(text(), 'Ask a question')]")).click();
-//        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
-//        Assert.assertEquals(tabs.size(), 2);
-//        driver.switchTo().window(tabs.get(1));
-//        WebDriverWait wait = new WebDriverWait(driver, 5);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("question_form_email")));
-//        String currentUrl = driver.getCurrentUrl();
-//        Assert.assertEquals(currentUrl, "https://home.openweathermap.org/questions");
